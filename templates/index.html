@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Great Number Game</title>
+</head>
+
+<body>
+    <div class='container'>
+        <h1 class='header'>Welcome to the Great Number Game!</h1>
+        <p>I am thinking of a number between 1 and 100</p>
+        <p>Take a guess!</p>
+
+
+        {% if 'userguess' not in session %}
+        <p></p>
+        {% elif session['userguess'] < session['number']%}
+        <div class='box1'>
+            <h1 class='solution'>Too low!!</h1>
+        </div>
+        {% elif session['userguess'] > session['number']%}
+        <div class='box1'>
+            <h1 class='solution'>Too high!!</h1>
+        </div>
+        {% elif session['userguess'] == session['number']%}
+        <div class='box2'>
+            <h2>{{session['userguess']}} was a lucky guess!! You've attempted it {{session['counter']}} time(s)!</h2>
+            <form name=playagain action='/destroy_session' method='post'>
+                <input type='submit' value='Play Again'>
+            </form>
+        </div>
+        {% endif %}
+
+        
+
+        <form class='guess' action='/myguess' method='post'>
+            <input name='guess' type='text' placeholder='# between 1 and 100'>
+            <input type='submit' value='Go!'>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
